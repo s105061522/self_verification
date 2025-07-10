@@ -12,7 +12,7 @@
       max-width: 480px;
       margin: auto;
     }
-    h1 {
+    h1, h2, p {
       text-align: center;
       color: #333;
     }
@@ -40,59 +40,61 @@
     button:hover {
       background-color: #45658a;
     }
-    .complete {
-      display: none;
-      text-align: center;
-      margin-top: 40px;
-    }
-    .complete h2 {
-      color: #4CAF50;
-    }
+    .page { display: none; }
+    .page.active { display: block; }
+    img.header-image { width: 100%; border-radius: 10px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
 
-  <h1>夜宿書店 線上報到</h1>
+  <!-- 第1頁：歡迎畫面 -->
+  <div id="page1" class="page active">
+    <img src="https://via.placeholder.com/480x200?text=書店圖片" alt="書店圖片" class="header-image">
+    <h1>歡迎來到樹屋書店</h1>
+    <button onclick="goToPage(2)">點此辦理登記</button>
+  </div>
 
-  <form id="checkinForm">
+  <!-- 第2頁：手機驗證 -->
+  <div id="page2" class="page">
+    <h2>手機驗證</h2>
+    <p>輸入手機號碼</p>
+    <input type="tel" id="phone" name="phone" required>
+    <button onclick="goToPage(3)">確認送出</button>
+  </div>
+
+  <!-- 第3頁：身份驗證 -->
+  <div id="page3" class="page">
+    <h2>身份驗證</h2>
     <label for="name">姓名</label>
     <input type="text" id="name" name="name" required>
 
-    <label for="phone">手機號碼</label>
-    <input type="tel" id="phone" name="phone" required>
+    <label for="id_number">證件號碼</label>
+    <input type="text" id="id_number" name="id_number" required>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email">
+    <label for="nationality">國籍</label>
+    <input type="text" id="nationality" name="nationality" required>
 
-    <label for="date">入住日期</label>
-    <input type="date" id="date" name="date" required>
+    <label for="dob">出生年月日</label>
+    <input type="date" id="dob" name="dob" required>
 
-    <label for="plan">選擇方案</label>
-    <select id="plan" name="plan" required>
-      <option value="">請選擇</option>
-      <option value="basic">基本方案（$800）</option>
-      <option value="with_drinks">夜宿＋晚間餐酒（$1200）</option>
-    </select>
-
-    <label for="id_upload">身分證上傳</label>
+    <label for="id_upload">上傳證件照片</label>
     <input type="file" id="id_upload" name="id_upload" accept="image/*" required>
 
-    <button type="button" onclick="mockPayment()">前往付款</button>
-  </form>
+    <button onclick="goToPage(4)">確認送出</button>
+  </div>
 
-  <div class="complete" id="completeMessage">
+  <!-- 第4頁：完成畫面 -->
+  <div id="page4" class="page">
     <h2>報到完成！</h2>
     <p>報到碼：<strong>BOOK2025</strong></p>
     <p>請截圖此畫面，現場出示報到碼即可。</p>
   </div>
 
   <script>
-    function mockPayment() {
-      const form = document.getElementById('checkinForm');
-      if (form.reportValidity()) {
-        form.style.display = 'none';
-        document.getElementById('completeMessage').style.display = 'block';
-      }
+    function goToPage(pageNumber) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + pageNumber).classList.add('active');
     }
   </script>
 
