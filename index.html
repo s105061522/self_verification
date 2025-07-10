@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>夜宿書店線上報到</title>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f4f4f9;
+      padding: 20px;
+      max-width: 480px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #5a7ea3;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+    button:hover {
+      background-color: #45658a;
+    }
+    .complete {
+      display: none;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .complete h2 {
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>夜宿書店 線上報到</h1>
+
+  <form id="checkinForm">
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">手機號碼</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email">
+
+    <label for="date">入住日期</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="plan">選擇方案</label>
+    <select id="plan" name="plan" required>
+      <option value="">請選擇</option>
+      <option value="basic">基本方案（$800）</option>
+      <option value="with_drinks">夜宿＋晚間餐酒（$1200）</option>
+    </select>
+
+    <label for="id_upload">身分證上傳</label>
+    <input type="file" id="id_upload" name="id_upload" accept="image/*" required>
+
+    <button type="button" onclick="mockPayment()">前往付款</button>
+  </form>
+
+  <div class="complete" id="completeMessage">
+    <h2>報到完成！</h2>
+    <p>報到碼：<strong>BOOK2025</strong></p>
+    <p>請截圖此畫面，現場出示報到碼即可。</p>
+  </div>
+
+  <script>
+    function mockPayment() {
+      const form = document.getElementById('checkinForm');
+      if (form.reportValidity()) {
+        form.style.display = 'none';
+        document.getElementById('completeMessage').style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
