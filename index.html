@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>夜宿書店線上報到</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body {
       font-family: 'Noto Sans TC', sans-serif;
@@ -54,7 +53,6 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
-    #qrcode { margin: 20px auto; width: fit-content; }
     #id_preview_wrapper {
       position: relative;
       margin-top: 10px;
@@ -72,6 +70,12 @@
       color: rgba(255, 0, 0, 0.5);
       pointer-events: none;
       white-space: nowrap;
+    }
+    iframe {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border: none;
     }
   </style>
 </head>
@@ -113,9 +117,8 @@
   <!-- 第3頁：完成畫面 -->
   <div id="page3" class="page">
     <h2>報到完成！</h2>
-    <p>請出示以下 QR Code 報到：</p>
-    <div id="qrcode"></div>
-    <p style="text-align:center">報到碼：<strong>BOOK2025</strong></p>
+    <p>請參考以下影片進行自助入場：</p>
+    <iframe width="100%" height="215" src="https://www.youtube.com/embed/Ujk4k56kicc" allowfullscreen></iframe>
   </div>
 
   <script>
@@ -123,14 +126,6 @@
       const pages = document.querySelectorAll('.page');
       pages.forEach(p => p.classList.remove('active'));
       document.getElementById('page' + pageNumber).classList.add('active');
-    }
-
-    function generateQRCode() {
-      const qrCodeDiv = document.getElementById("qrcode");
-      qrCodeDiv.innerHTML = "";
-      QRCode.toCanvas(qrCodeDiv, 'BOOK2025', { width: 200 }, function (error) {
-        if (error) console.error(error);
-      });
     }
 
     function validateAndNext() {
@@ -146,7 +141,6 @@
       }
 
       goToPage(3);
-      generateQRCode();
     }
 
     function previewWithWatermark(event) {
