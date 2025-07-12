@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>夜宿書店線上報到</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background-color: #f4f4f9;
+      background: url('https://i.ibb.co/4thwGjH/IMG-0049.jpg') no-repeat center center fixed;
+      background-size: cover;
       padding: 20px;
       max-width: 480px;
       margin: auto;
@@ -40,16 +42,26 @@
     button:hover {
       background-color: #45658a;
     }
-    .page { display: none; }
+    .page {
+      display: none;
+      background-color: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 10px;
+    }
     .page.active { display: block; }
-    img.header-image { width: 100%; border-radius: 10px; margin-bottom: 20px; }
+    img.header-image {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    #qrcode { margin: 20px auto; width: fit-content; }
   </style>
 </head>
 <body>
 
   <!-- 第1頁：歡迎畫面 -->
   <div id="page1" class="page active">
-    <img src="https://via.placeholder.com/480x200?text=書店圖片" alt="書店圖片" class="header-image">
+    <img src="https://i.ibb.co/5h72NFB/LOGO.png" alt="樹屋書店LOGO" class="header-image">
     <h1>歡迎來到樹屋書店</h1>
     <button onclick="goToPage(2)">點此辦理登記</button>
   </div>
@@ -80,14 +92,15 @@
     <label for="id_upload">上傳證件照片</label>
     <input type="file" id="id_upload" name="id_upload" accept="image/*" required>
 
-    <button onclick="goToPage(4)">確認送出</button>
+    <button onclick="goToPage(4); generateQRCode();">確認送出</button>
   </div>
 
   <!-- 第4頁：完成畫面 -->
   <div id="page4" class="page">
     <h2>報到完成！</h2>
-    <p>報到碼：<strong>BOOK2025</strong></p>
-    <p>請截圖此畫面，現場出示報到碼即可。</p>
+    <p>請出示以下 QR Code 報到：</p>
+    <div id="qrcode"></div>
+    <p style="text-align:center">報到碼：<strong>BOOK2025</strong></p>
   </div>
 
   <script>
@@ -95,6 +108,14 @@
       const pages = document.querySelectorAll('.page');
       pages.forEach(p => p.classList.remove('active'));
       document.getElementById('page' + pageNumber).classList.add('active');
+    }
+
+    function generateQRCode() {
+      const qrCodeDiv = document.getElementById("qrcode");
+      qrCodeDiv.innerHTML = ""; // clear previous QR
+      QRCode.toCanvas(qrCodeDiv, 'BOOK2025', { width: 200 }, function (error) {
+        if (error) console.error(error);
+      });
     }
   </script>
 
